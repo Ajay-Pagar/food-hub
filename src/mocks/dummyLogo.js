@@ -1,0 +1,1 @@
+export default "dummy.png";   // because img in imported default

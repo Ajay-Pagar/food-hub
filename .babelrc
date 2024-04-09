@@ -1,0 +1,6 @@
+{
+  "presets": [
+    ["@babel/preset-env", { "targets": { "node": "current" } }], // this is for import and other ES6 things
+    ["@babel/preset-react", { "runtime": "automatic" }]  // it is not understanding JSX
+  ]
+}

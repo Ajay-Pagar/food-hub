@@ -8,7 +8,7 @@ class About extends Component {
     return (
       <div>
         <h2>This is About Page</h2>
-        <Profile/>
+        <Profile />
       </div>
     );
   }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IMG_URL } from "../config";
+import { useDispatch } from "react-redux";
+import { addItem } from "./utils/cartSlice";
 
 const RestaurantMenu = () => {
   const { id } = useParams();
@@ -13,14 +15,23 @@ const RestaurantMenu = () => {
 
   async function getRestaurantData() {
     const response = await fetch(
-      "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.5993483&lng=73.762495&restaurantId="+id
+      "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.61610&lng=73.72860&restaurantId=" +
+        id
     );
     const json = await response.json();
-    setRestaurantData(json?.data?.cards[0]?.card?.card?.info);
-    setRestaurantMenu(json?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR.cards[2].card.card.itemCards);
-    console.log(restaurantMenu);
+    setRestaurantData(json?.data?.cards[2]?.card?.card?.info);
+    setRestaurantMenu(
+      json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+        ?.card?.itemCards
+    );
     // json.data.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card.card.itemCards
   }
+
+  const dispatch = useDispatch();
+
+  const handleAddItem = (info) => {
+    dispatch(addItem(info)); // payload : info
+  };
   return (
     <div className="restaurant-menu">
       <div>
@@ -32,11 +43,25 @@ const RestaurantMenu = () => {
       </div>
       <div>
         <h3>Menu :</h3>
-        {restaurantMenu.map((item)=>{
-            return(
-                <li key={item.id}>{item.card.info.name}</li>
-            )
-        })}
+        <ul data-testid="menu">
+          {restaurantMenu.map((item) => {
+            const {
+              card: { info },
+            } = item;
+            // console.log(info);
+            return (
+              <li key={item.card.info.id}>
+                {item.card.info.name}
+                <button
+                  data-testid="addBtn"
+                  onClick={() => handleAddItem(info)}
+                >
+                  Add
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );
