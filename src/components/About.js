@@ -1,9 +1,9 @@
 import { Component } from "react";
 import Profile from "./Profile";
 class About extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor() {
+  //   super();
+  // }
   render() {
     return (
       <div>

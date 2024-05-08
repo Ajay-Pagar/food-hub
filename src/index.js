@@ -15,8 +15,10 @@ import Shimmer from "./components/Shimmer";
 import { Provider } from "react-redux";
 import store from "./components/utils/Store";
 import Cart from "./components/Cart";
+
 const Instamart = lazy(() => import("./components/Instamart")); // React will suspend loading because for first time code is not there
 const About = lazy(() => import("./components/About")); // for that we wrap our component inside Suspense
+
 const Applayout = () => {
   return (
     <Provider store={store}>

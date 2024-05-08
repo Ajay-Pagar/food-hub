@@ -11,7 +11,7 @@ const RestaurantMenu = () => {
 
   useEffect(() => {
     getRestaurantData();
-  }, []);
+  }, [getRestaurantData]);
 
   async function getRestaurantData() {
     const response = await fetch(
